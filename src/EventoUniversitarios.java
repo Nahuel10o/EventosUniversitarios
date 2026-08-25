@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class EventoUniversitarios {
     private final String  Id;
@@ -73,14 +74,20 @@ public class EventoUniversitarios {
         this.actividades.add(actividad);
 
     }
+    public ArrayList<Actividad> getActividades(){
+        return actividades;
+    }
+    public void mostrarActividades(){};
 
     //metodos
     public void mostrar(){
         System.out.println("Id: " + Id);
         System.out.println("titulo: " + titulo );
-        System.out.println("costoBase: " + costoBase);
+        System.out.println("costo: " + calcularCostoEstimado());
         System.out.println("gratuito: " + gratuito );
-        System.out.println("cantEventos: " + cantEventos );
+        System.out.println("Sala:" + (sala !=null ? sala.getNombre() : "Sin sala asignada"));
+
+
     }
 
     public double calcularCostoEstimado(){
