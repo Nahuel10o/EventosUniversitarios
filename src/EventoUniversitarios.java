@@ -1,19 +1,29 @@
+import java.util.ArrayList;
+
 public class EventoUniversitarios {
     private final String  Id;
     private String titulo;
     private double costoBase;
     private boolean gratuito;
+
+
     private static int cantEventos;
 
     private Sala sala;
-    private Actividad actividad;
+    private ArrayList<Actividad> actividades;
 
-    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito, int id, String nombre, int cupoMaximo, int CUPO_MINIMO){
+
+    static {
+        cantEventos = 0;
+        System.out.println("Inicializador estatico: Se cargo la clase EventoUniversitario.");
+    }
+
+    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito){
         this.Id = Id;
         this.titulo = titulo;
         this.costoBase = costoBase;
         this.gratuito = gratuito;
-        this.actividad = new Actividad(id,titulo, cupoMaximo, CUPO_MINIMO);
+        this.actividades = new ArrayList<>();
         cantEventos++;
     }
 
@@ -22,6 +32,7 @@ public class EventoUniversitarios {
         this.titulo = otro.titulo;
         this.costoBase = otro.costoBase;
         this.gratuito = otro.gratuito;
+        this.actividades = new ArrayList<>(otro.actividades);
     }
 
     public String getTitulo() {
@@ -56,6 +67,13 @@ public class EventoUniversitarios {
         this.sala = sala;
     }
 
+    public void crearActividad(int id, String nombre, int cupoMaximo){
+
+        Actividad actividad = new Actividad(id, nombre, cupoMaximo);
+        this.actividades.add(actividad);
+
+    }
+
     //metodos
     public void mostrar(){
         System.out.println("Id: " + Id);
@@ -64,17 +82,14 @@ public class EventoUniversitarios {
         System.out.println("gratuito: " + gratuito );
         System.out.println("cantEventos: " + cantEventos );
     }
+
     public double calcularCostoEstimado(){
         if (this.gratuito)
             return 0;
         else
-            return costoBase;
+            return costoBase * 1.21;
     }
-    public void asignarSala(){
 
-    }
-    public void crearActividad(int id, String titulo, int cupo){
 
-    }
 
 }

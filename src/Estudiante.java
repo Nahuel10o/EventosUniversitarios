@@ -2,7 +2,6 @@ public class Estudiante {
     private String legajo, nombre;
 
 
-
     public Estudiante (String legajo, String nombre){
         this.legajo = legajo;
         this.nombre = nombre;

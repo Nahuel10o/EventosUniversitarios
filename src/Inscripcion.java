@@ -13,5 +13,18 @@ public class Inscripcion {
         this.estudiante = estudiante;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public Actividad getActividad() {
+        return actividad;
+    }
+    public Estudiante getEstudiante(){
+        return  estudiante;
+    }
 }
