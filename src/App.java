@@ -29,8 +29,8 @@ public class App {
             estudiantes.add(new Estudiante(legajo, apenomb));
             System.out.println("desea crear otro estudiante  S/N?");
             String respuesta = scanner.nextLine().toLowerCase();
-            continuar = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
-        };
+            continuar = respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí");
+        }
 
         /* Se itera construyendo eventos */
         System.out.println("\n\nREGISTRO DE EVENTOS: ");
@@ -79,8 +79,16 @@ public class App {
                 System.out.println("Ingese el cupo máximo de estudiantes admitidos para la actividad: ");
                 cupo= scanner.nextInt();
                 scanner.nextLine();
+                System.out.println("Tipo de Actividad? Charla/Taller escriba c/t");
+                String tipo = scanner.nextLine().toLowerCase();
+                TipoActividad tipoActividad = TipoActividad.NOespecificado;
+                if(tipo.equals("c") || tipo.equals("charla")){
+                    tipoActividad = TipoActividad.Charla;
+                } else if (tipo.equals("t")|| tipo.equals("taller")) {
+                    tipoActividad = TipoActividad.Taller;
+                }
 
-                evento.crearActividad(idActividad, tituloActividad, cupo);
+                evento.crearActividad(idActividad, tituloActividad, cupo, tipoActividad);
 
                 System.out.println("Desea crear otra actividad para el  evento " + evento.getTitulo() + " S/N?");
                 respuesta = scanner.nextLine().toLowerCase();
@@ -125,9 +133,9 @@ public class App {
             System.out.println("\n\nDesea crear otro evento  S/N?");
             respuesta = scanner.nextLine().toLowerCase();
             continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
-        } ;
+        }
 
-        /* Se muestra la cantidad total de eventos creados */;
+        /* Se muestra la cantidad total de eventos creados */
         System.out.println("\n\nTOTAL DE EVENTOS CREADOS: " + EventoUniversitarios.getCantEventos());
     }
 }

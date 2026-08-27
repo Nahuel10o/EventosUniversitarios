@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 
 
-public class Actividad {
-    private int id;
-    private String titulo;
-    private int cupoMaximo;
-    public static final int CUPO_MINIMO;
+public abstract class Actividad {
+    protected int id;
+    protected String titulo;
+    protected int cupoMaximo;
+    protected static final int CUPO_MINIMO;
 
     private ArrayList<Inscripcion> incripciones;
 
 
-    static {
+    static  {
         CUPO_MINIMO = 5;
     }
 
@@ -62,7 +62,7 @@ public class Actividad {
         System.out.println("id: " + id);
         System.out.println("cupoMaximo: " + cupoMaximo);
     }
-
+    public abstract double calcularCostoMateriales();
 
     public void mostrarInscripciones(){
         for(Inscripcion i:incripciones){

@@ -1,11 +1,12 @@
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 public class EventoUniversitarios {
     private final String  Id;
     private String titulo;
     private double costoBase;
     private boolean gratuito;
+    private Scanner scanner = new Scanner(System.in);
 
 
     private static int cantEventos;
@@ -69,10 +70,20 @@ public class EventoUniversitarios {
         this.sala = sala;
     }
 
-    public void crearActividad(int id, String nombre, int cupoMaximo){
-
-        Actividad actividad = new Actividad(id, nombre, cupoMaximo);
-        this.actividades.add(actividad);
+    public void crearActividad(int id, String nombre, int cupoMaximo, TipoActividad tipo){
+        if (tipo == TipoActividad.Charla){
+            System.out.println("Ingrese el disertante de la charla: ");
+            String disertante = scanner.nextLine();
+            Charla charla = new Charla(id, nombre, cupoMaximo, disertante);
+            this.actividades.add(charla);
+        }
+        else if(tipo == TipoActividad.Taller){
+            System.out.println("Requiere notebook?");
+            String repuesta = scanner.nextLine();
+            boolean requiereNotebook = (repuesta.toLowerCase().equals("si") || repuesta.toLowerCase().equals("s") || repuesta.toLowerCase().equals("sí")) ? true : false;
+            Taller taller = new Taller(id, titulo, cupoMaximo, requiereNotebook);
+            this.actividades.add(taller);
+        }
 
     }
     public ArrayList<Actividad> getActividades(){
