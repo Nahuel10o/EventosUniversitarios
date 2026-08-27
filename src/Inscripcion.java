@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 
 public class Inscripcion {
-    private LocalDate fecha; //cambiar esto por LocalADate Cuando lo expliquen
+    private LocalDate fecha;
     private String estado;
     private Actividad actividad;
     private Estudiante estudiante;

@@ -12,7 +12,7 @@ public class Actividad {
 
 
     static {
-        CUPO_MINIMO =5;
+        CUPO_MINIMO = 5;
     }
 
     public Actividad (int id, String titulo, int cupoMaximo){
@@ -56,15 +56,22 @@ public class Actividad {
         this.incripciones.add(inscripcion);
         return  inscripcion;
     }
+    public void mostrarActividad(){
+        System.out.println("\nActividad:");
+        System.out.println("titulo: " + titulo);
+        System.out.println("id: " + id);
+        System.out.println("cupoMaximo: " + cupoMaximo);
+    }
+
 
     public void mostrarInscripciones(){
         for(Inscripcion i:incripciones){
-            System.out.println(
-                "Estado: " + i.getEstado() +
-                "Fecha: " + i.getFecha() +
-                "Estudiante: " + i.getEstudiante().getNombre() +
-                "Legajo: " + i.getEstudiante().getLegajo()
-            );
+            System.out.println("\nInscripcion");
+            System.out.println("Fecha: " + i.getFecha());
+            System.out.println("Estado: " + i.getEstado());
+            System.out.println("Estudiante: " + i.getEstudiante().getNombre());
+            System.out.println("Legajo: " + i.getEstudiante().getLegajo());
+
         }
     }
 

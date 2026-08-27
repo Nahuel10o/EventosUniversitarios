@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 public class EventoUniversitarios {
     private final String  Id;
@@ -19,12 +19,13 @@ public class EventoUniversitarios {
         System.out.println("Inicializador estatico: Se cargo la clase EventoUniversitario.");
     }
 
-    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito){
+    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito, int id, String nombre, int cupoMaximo){
         this.Id = Id;
         this.titulo = titulo;
         this.costoBase = costoBase;
         this.gratuito = gratuito;
         this.actividades = new ArrayList<>();
+        this.crearActividad(id, nombre, cupoMaximo);
         cantEventos++;
     }
 
@@ -77,16 +78,18 @@ public class EventoUniversitarios {
     public ArrayList<Actividad> getActividades(){
         return actividades;
     }
-    public void mostrarActividades(){};
 
     //metodos
     public void mostrar(){
+        System.out.println("\n\ntitulo: " + titulo );
         System.out.println("Id: " + Id);
-        System.out.println("titulo: " + titulo );
         System.out.println("costo: " + calcularCostoEstimado());
         System.out.println("gratuito: " + gratuito );
         System.out.println("Sala:" + (sala !=null ? sala.getNombre() : "Sin sala asignada"));
-
+        for(Actividad i: actividades) {
+            i.mostrarActividad();
+            i.mostrarInscripciones();
+        }
 
     }
 
