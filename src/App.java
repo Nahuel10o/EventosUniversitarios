@@ -69,10 +69,10 @@ public class App {
                     tituloActividad,
                     cupo
             );
+            ++idActividad;
             System.out.println("Desea crear otra actividad para el  evento " + evento.getTitulo() + " S/N?");
             respuesta = scanner.nextLine().toLowerCase();
             continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
-            ++idActividad;
             while(continuar){
                 System.out.println("Ingese el título de la actividad: ");
                 tituloActividad= scanner.nextLine();
@@ -109,7 +109,7 @@ public class App {
                 for (Estudiante estudiante: estudiantes){
                     if (estudiante.getLegajo().equals(legajo)){
 
-                        evento.getActividades().get(--idActividad).inscribir(estudiante);
+                        evento.getActividades().get(--idActividad).inscribir(estudiante); //.get(--idActividad) es para acceder a la instancia Actividad de la lista actividades
                     }
                 }
                 System.out.println("Desea generar otra inscripción  S/N?");
