@@ -1,12 +1,12 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class EventoUniversitarios {
     private final String  Id;
     private String titulo;
     private double costoBase;
     private boolean gratuito;
-    private Scanner scanner = new Scanner(System.in);
+
 
 
     private static int cantEventos;
@@ -20,13 +20,14 @@ public class EventoUniversitarios {
         System.out.println("Inicializador estatico: Se cargo la clase EventoUniversitario.");
     }
 
-    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito, int id, String nombre, int cupoMaximo){
+    public EventoUniversitarios (String Id, String titulo, double costoBase, boolean gratuito, Actividad actividad){
         this.Id = Id;
         this.titulo = titulo;
         this.costoBase = costoBase;
         this.gratuito = gratuito;
         this.actividades = new ArrayList<>();
-        this.crearActividad(id, nombre, cupoMaximo);
+        this.actividades.add(actividad);
+
         cantEventos++;
     }
 
@@ -70,22 +71,9 @@ public class EventoUniversitarios {
         this.sala = sala;
     }
 
-    public void crearActividad(int id, String nombre, int cupoMaximo, TipoActividad tipo){
-        if (tipo == TipoActividad.Charla){
-            System.out.println("Ingrese el disertante de la charla: ");
-            String disertante = scanner.nextLine();
-            Charla charla = new Charla(id, nombre, cupoMaximo, disertante);
-            this.actividades.add(charla);
-        }
-        else if(tipo == TipoActividad.Taller){
-            System.out.println("Requiere notebook?");
-            String repuesta = scanner.nextLine();
-            boolean requiereNotebook = (repuesta.toLowerCase().equals("si") || repuesta.toLowerCase().equals("s") || repuesta.toLowerCase().equals("sí")) ? true : false;
-            Taller taller = new Taller(id, titulo, cupoMaximo, requiereNotebook);
-            this.actividades.add(taller);
-        }
+    public void agregarActividad(Actividad actividad) { this.actividades.add(actividad);}
 
-    }
+
     public ArrayList<Actividad> getActividades(){
         return actividades;
     }
@@ -105,10 +93,14 @@ public class EventoUniversitarios {
     }
 
     public double calcularCostoEstimado(){
+        double total = costoBase;
         if (this.gratuito)
             return 0;
         else
-            return costoBase * 1.21;
+            for (Actividad i: actividades){
+                total += i.calcularCostoMateriales();
+            }
+            return total * 1.21;
     }
 
 

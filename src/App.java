@@ -29,7 +29,7 @@ public class App {
             estudiantes.add(new Estudiante(legajo, apenomb));
             System.out.println("desea crear otro estudiante  S/N?");
             String respuesta = scanner.nextLine().toLowerCase();
-            continuar = respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí");
+            continuar = esAfirmativa(respuesta);
         }
 
         /* Se itera construyendo eventos */
@@ -42,7 +42,7 @@ public class App {
             String titulo = scanner.nextLine();
             System.out.println("El evento tendra costo para los participantes S/N?");
             String respuesta = scanner.nextLine().toLowerCase();
-            if (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) {
+            if (esAfirmativa(respuesta)) {
                 esGratuito= false;
                 System.out.println("Ingese el costo base:  ");
                 costoBase = scanner.nextDouble();
@@ -54,46 +54,26 @@ public class App {
             /* Se crean las actividades del evento */
             System.out.println("\n\nREGISTRO DE ACTIVIDADES PARA EL EVENTO " );
             int idActividad=1;
-            System.out.println("Ingese el título de la actividad: ");
-            String tituloActividad= scanner.nextLine();
-            System.out.println("Ingese el cupo máximo de estudiantes admitidos para la actividad: ");
-            int cupo= scanner.nextInt();
-            scanner.nextLine();
-
+            Actividad actividad = solicitarDatosActividad(scanner, idActividad);
+            ++idActividad;
             EventoUniversitarios evento = new EventoUniversitarios(
                     "EVT-" + id,
                     titulo,
                     costoBase,
                     esGratuito,
-                    idActividad,
-                    tituloActividad,
-                    cupo
+                    actividad
             );
-            ++idActividad;
+
             System.out.println("Desea crear otra actividad para el  evento " + evento.getTitulo() + " S/N?");
             respuesta = scanner.nextLine().toLowerCase();
-            continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
+            continuar  = esAfirmativa(respuesta);
             while(continuar){
-                System.out.println("Ingese el título de la actividad: ");
-                tituloActividad= scanner.nextLine();
-                System.out.println("Ingese el cupo máximo de estudiantes admitidos para la actividad: ");
-                cupo= scanner.nextInt();
-                scanner.nextLine();
-                System.out.println("Tipo de Actividad? Charla/Taller escriba c/t");
-                String tipo = scanner.nextLine().toLowerCase();
-                TipoActividad tipoActividad = TipoActividad.NOespecificado;
-                if(tipo.equals("c") || tipo.equals("charla")){
-                    tipoActividad = TipoActividad.Charla;
-                } else if (tipo.equals("t")|| tipo.equals("taller")) {
-                    tipoActividad = TipoActividad.Taller;
-                }
-
-                evento.crearActividad(idActividad, tituloActividad, cupo, tipoActividad);
-
+                Actividad actividadExtra = solicitarDatosActividad(scanner, idActividad);
+                ++idActividad;
+                evento.agregarActividad(actividadExtra);
                 System.out.println("Desea crear otra actividad para el  evento " + evento.getTitulo() + " S/N?");
                 respuesta = scanner.nextLine().toLowerCase();
-                continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
-                ++idActividad;
+                continuar  = esAfirmativa(respuesta);
             }
 
             /* Se crea una sala y se asigna al evento */
@@ -122,7 +102,7 @@ public class App {
                 }
                 System.out.println("Desea generar otra inscripción  S/N?");
                 respuesta = scanner.nextLine().toLowerCase();
-                continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
+                continuar  = esAfirmativa(respuesta);
             }
 
             /* Se muestran datos del evento */
@@ -132,10 +112,45 @@ public class App {
             /* Se consulta si se desea continuar creando eventos*/
             System.out.println("\n\nDesea crear otro evento  S/N?");
             respuesta = scanner.nextLine().toLowerCase();
-            continuar  = (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí")) ? true : false;
+            continuar  = esAfirmativa(respuesta);
         }
 
         /* Se muestra la cantidad total de eventos creados */
         System.out.println("\n\nTOTAL DE EVENTOS CREADOS: " + EventoUniversitarios.getCantEventos());
+    }
+    private static boolean esAfirmativa(String respuesta){
+        return (respuesta.equals("s") || respuesta.equals("si") || respuesta.equals("sí"));
+    }
+
+
+    private static Actividad solicitarDatosActividad(Scanner scanner, int id){
+        int idActividad= id;
+        System.out.println("Ingese el título de la actividad: ");
+        String tituloActividad= scanner.nextLine();
+        System.out.println("Ingese el cupo máximo de estudiantes admitidos para la actividad: ");
+        int cupo= scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Tipo de Actividad (c: Charla / t: Taller):");
+        String tipo = scanner.nextLine().toLowerCase();
+        if(tipo.equals("c") || tipo.equals("charla")){
+            System.out.println("Ingrese el disertante de la charla: ");
+            String disertante = scanner.nextLine();
+            Charla charla = new Charla(id, tituloActividad, cupo, disertante);
+            return  charla;
+
+        } else if (tipo.equals("t")|| tipo.equals("taller")) {
+            System.out.println("Requiere notebook S/N?");
+            String repuesta = scanner.nextLine();
+            boolean requiereNotebook = esAfirmativa(repuesta) ;
+            Taller taller = new Taller(id, tituloActividad, cupo, requiereNotebook);
+            return taller;
+        }else{
+            System.out.println("Creando charla por defecto");
+            System.out.println("Ingrese el disertante de la charla: ");
+            String disertante = scanner.nextLine();
+            Charla charla = new Charla(id, tituloActividad, cupo, disertante);
+            return  charla;
+        }
+
     }
 }
